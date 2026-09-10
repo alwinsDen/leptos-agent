@@ -1,4 +1,4 @@
-rootProject.name = "liptos-agent"
+rootProject.name = "leptos-agent"
 
 pluginManagement {
     repositories {
@@ -27,6 +27,6 @@ dependencyResolutionManagement {
     }
 }
 
-include(":androidApp")
-include(":sharedLogic")
-include(":sharedUI")
+include(":apps:leptos-agent:androidApp")
+include(":apps:leptos-agent:shared:sharedLogic")
+include(":apps:leptos-agent:shared:sharedUI")
