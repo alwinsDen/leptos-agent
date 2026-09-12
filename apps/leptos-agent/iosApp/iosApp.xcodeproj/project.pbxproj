@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		523735A830555A5C00ADB8F4 /* DotLottie in Frameworks */ = {isa = PBXBuildFile; productRef = 523735A730555A5C00ADB8F4 /* DotLottie */; };
+		523735AA30555A5C00ADB8F4 /* DotLottiePlayer in Frameworks */ = {isa = PBXBuildFile; productRef = 523735A930555A5C00ADB8F4 /* DotLottiePlayer */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		F9353959E58E30976DE69BD8 /* leptos-agent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "leptos-agent.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -49,6 +54,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				523735AA30555A5C00ADB8F4 /* DotLottiePlayer in Frameworks */,
+				523735A830555A5C00ADB8F4 /* DotLottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -93,6 +100,8 @@
 			);
 			name = iosApp;
 			packageProductDependencies = (
+				523735A730555A5C00ADB8F4 /* DotLottie */,
+				523735A930555A5C00ADB8F4 /* DotLottiePlayer */,
 			);
 			productName = iosApp;
 			productReference = F9353959E58E30976DE69BD8 /* leptos-agent.app */;
@@ -122,6 +131,9 @@
 			);
 			mainGroup = 2891A1DBC6CE08A611F1E7C6;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				523735A630555A5C00ADB8F4 /* XCRemoteSwiftPackageReference "dotlottie-ios" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = CE20379B2B361619FA4A0D48 /* Products */;
 			projectDirPath = "";
@@ -376,6 +388,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		523735A630555A5C00ADB8F4 /* XCRemoteSwiftPackageReference "dotlottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/LottieFiles/dotlottie-ios.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		523735A730555A5C00ADB8F4 /* DotLottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 523735A630555A5C00ADB8F4 /* XCRemoteSwiftPackageReference "dotlottie-ios" */;
+			productName = DotLottie;
+		};
+		523735A930555A5C00ADB8F4 /* DotLottiePlayer */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 523735A630555A5C00ADB8F4 /* XCRemoteSwiftPackageReference "dotlottie-ios" */;
+			productName = DotLottiePlayer;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = FA258FA6AF6B2628AB022791 /* Project object */;
 }

@@ -10,7 +10,7 @@ struct NavigationController: View {
     var body: some View {
         
             TabView {
-                Tab("New", systemImage: "plus.app.fill"){
+                Tab("New Chat", systemImage: "plus.app.fill"){
                     NavigationStack {
                         ContentView()
                     }

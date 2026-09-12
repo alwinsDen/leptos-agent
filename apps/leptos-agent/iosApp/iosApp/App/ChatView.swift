@@ -1,0 +1,84 @@
+import SharedLogic
+import SwiftUI
+
+struct ContentView: View {
+    @State private var username: String = ""
+    @State private var showLeptosWork = true
+    @State private var showContent = false
+    var body: some View {
+        VStack {
+            ScrollView(){
+                VStack{
+                    Text("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride Printing Library in London, took a 1914 Cicero translation and scrambled it to make dummy text for Letraset's Body Type sheets. It has survived not only many decades, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised thanks to these sheets and more recently with desktop publishing software like Aldus PageMaker and Microsoft Word including versions of Lorem Ipsum.")
+                }.padding(16)
+                    .background(.ultraThinMaterial, in: .rect(cornerRadius: 24))
+                VStack{
+                    if(showLeptosWork){
+                        HStack {
+                            RunLottie(fileName: "loader_cat", size: 64)
+                            Text("leptos at work...")
+                            Spacer()
+                        }
+                    } else {
+                        Spacer().frame(height: 10)
+                    }
+                    Text("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride Printing Library in London, took a 1914 Cicero translation and scrambled it to make dummy text for Letraset's Body Type sheets. It has survived not only many decades, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised thanks to these sheets and more recently with desktop publishing software like Aldus PageMaker and Microsoft Word including versions of Lorem Ipsum.")
+                        .padding(.vertical, 0)
+                }
+            }
+            .padding(.leading, 10)
+            VStack {
+                TextField("Ask Leptos agent...", text: $username, axis: .vertical)
+                    .lineLimit(6)
+                    .multilineTextAlignment(.leading)
+                Spacer().frame(height: 20)
+                HStack {
+                    Menu {
+                        Button {
+                            print("C:camera-lock")
+                        } label: { Label("Camera", systemImage: "camera") }
+                        Button { } label: { Label("Photos", systemImage: "photo") }
+                        Button { } label: { Label("Files", systemImage: "paperclip") }
+                        Button { } label: { Label("Plugins", systemImage: "at") }
+                    } label: {
+                        SharedIcon(systemName: "plus.circle.fill")
+                    }.labelStyle(.iconOnly)
+                        .buttonStyle(.plain)
+                    Spacer().frame(width: 20)
+                    Button {
+                        //
+                    }label: {
+                        Text("Leptos Basic")
+                            .foregroundStyle(Color.primary.opacity(0.8))
+                            .padding(6)
+                    }
+                    .background(.ultraThinMaterial, in: .rect(cornerRadius: 8))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.primary.opacity(0.8), lineWidth: 0.5)
+                    )
+                    Spacer()
+                    Button{
+                        //
+                    } label: {
+                        SharedIcon(systemName: "music.microphone.circle.fill")
+                    }
+                    .labelStyle(.iconOnly)
+                    .buttonStyle(.plain)
+                    Spacer().frame(width: 20)
+                    Button{
+                        showLeptosWork = !showLeptosWork;
+                    } label: {
+                        SharedIcon(systemName: "paperplane.circle.fill")
+                    }
+                    .labelStyle(.iconOnly)
+                    .buttonStyle(.plain)
+                }
+            }.padding(12)
+                .background(.ultraThinMaterial, in: .rect(cornerRadius: 14))
+                .padding(.horizontal, 12)
+                .padding(.bottom, 12)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+    }
+}
