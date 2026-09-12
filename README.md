@@ -1,4 +1,4 @@
-# Leptos Agent
+# Leptos Agent Monorepo
 
 This is a Kotlin Multiplatform monorepo containing multiple apps and shared modules.
 
