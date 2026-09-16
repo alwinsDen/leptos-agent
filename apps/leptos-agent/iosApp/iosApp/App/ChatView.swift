@@ -8,10 +8,13 @@ struct ContentView: View {
     var body: some View {
         VStack {
             ScrollView(){
-                VStack{
-                    Text("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride Printing Library in London, took a 1914 Cicero translation and scrambled it to make dummy text for Letraset's Body Type sheets. It has survived not only many decades, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised thanks to these sheets and more recently with desktop publishing software like Aldus PageMaker and Microsoft Word including versions of Lorem Ipsum.")
-                }.padding(16)
-                    .background(.ultraThinMaterial, in: .rect(cornerRadius: 24))
+                HStack {
+                    VStack{
+                        Text("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride Printing Library in London, took a 1914 Cicero translation and scrambled it to make dummy text for Letraset's Body Type sheets. It has survived not only many decades, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised thanks to these sheets and more recently with desktop publishing software like Aldus PageMaker and Microsoft Word including versions of Lorem Ipsum.")
+                    }.padding(16)
+                        .background(.ultraThinMaterial, in: .rect(cornerRadius: 24))
+                }
+                .padding(.trailing, 16)
                 VStack{
                     if(showLeptosWork){
                         HStack {
@@ -22,10 +25,12 @@ struct ContentView: View {
                     } else {
                         Spacer().frame(height: 10)
                     }
-                    Text("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride Printing Library in London, took a 1914 Cicero translation and scrambled it to make dummy text for Letraset's Body Type sheets. It has survived not only many decades, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised thanks to these sheets and more recently with desktop publishing software like Aldus PageMaker and Microsoft Word including versions of Lorem Ipsum.")
+                    Text("test Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride Printing Library in London, took a 1914 Cicero translation and scrambled it to make dummy text for Letraset's Body Type sheets. It has survived not only many decades, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised thanks to these sheets and more recently with desktop publishing software like Aldus PageMaker and Microsoft Word including versions of Lorem Ipsum.")
                         .padding(.vertical, 0)
                 }
             }
+            .ignoresSafeArea(.keyboard, edges: .bottom)
+            .scrollDismissesKeyboard(.immediately)
             .padding(.leading, 10)
             VStack {
                 TextField("Ask Leptos agent...", text: $username, axis: .vertical)
@@ -76,7 +81,7 @@ struct ContentView: View {
                 }
             }.padding(12)
                 .background(.ultraThinMaterial, in: .rect(cornerRadius: 14))
-                .padding(.horizontal, 12)
+                .padding(.horizontal, 6)
                 .padding(.bottom, 12)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)

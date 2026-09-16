@@ -33,4 +33,4 @@ dependencyResolutionManagement {
 include(":apps:leptos-agent:androidApp")
 include(":apps:leptos-agent:shared:sharedLogic")
 include(":apps:leptos-agent:shared:sharedUI")
-include(":unified-service")
+include(":shared:payloads")

@@ -19,9 +19,10 @@ Kotlin Multiplatform **monorepo** (multiple apps + shared modules) built from th
 ```
 apps/<app>/androidApp|iosApp       # each KMP app lives in its own folder
 apps/<app>/shared/<module>         # per-app shared modules, owned by that app
+shared/<module>                    # repo-level shared modules (currently :shared:payloads)
 ```
 
-Each app is self-contained: its `shared/` modules live inside the app folder. There is no repo-level shared code — if two apps ever need to share a module, introduce a repo-level `shared/` then.
+Each app's `shared/` modules live inside the app folder and are owned by that app. A repo-level `shared/` module only exists if it is genuinely cross-app (as `:shared:payloads` is).
 
 ### Adding a new app
 
@@ -37,6 +38,7 @@ Each app is self-contained: its `shared/` modules live inside the app folder. Th
 - `apps/leptos-agent/shared/sharedLogic` — shared non-UI logic; also produces the static framework `SharedLogic` (iosArm64, iosSimulatorArm64) consumed by the iOS app.
 - `apps/leptos-agent/shared/sharedUI` — shared Compose UI; Compose resources live in `apps/leptos-agent/shared/sharedUI/src/commonMain/composeResources` (accessed via generated `Res` class).
 - `apps/leptos-agent/androidApp` — Android entry (`com.alwinsden.leptosagent.MainActivity`).
+- `shared/payloads` — kotlinx-serialization payload/data types, shared repo-level. It is an `api` dependency of `sharedLogic` **and exported in the `SharedLogic` iOS framework** (`export(project(":shared:payloads"))`), so payload classes are visible from Swift.
 
 ## Gotchas
 
@@ -48,3 +50,4 @@ Each app is self-contained: its `shared/` modules live inside the app folder. Th
 - `local.properties` (Android SDK path) is gitignored and machine-specific — never commit it.
 - Package base is `com.alwinsden.leptosagent`; iOS bundle id is `com.alwinsden.leptosagent.leptos-agent` (dash included, set in `apps/leptos-agent/iosApp/Configuration/Config.xcconfig`).
 - README text about `jvmMain`/Desktop in `sharedUI` is leftover template prose — there is no desktop target.
+- The Ktor version catalog (`ktorLibs` in `settings.gradle.kts`) and the Ktor plugin in the root `build.gradle.kts` are declared but not yet applied by any module.
