@@ -3,6 +3,8 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidMultiplatformLibrary)
+    alias(libs.plugins.openapiGenerator)
+    alias(libs.plugins.kotlinSerialization)
 }
 
 kotlin {
@@ -13,7 +15,6 @@ kotlin {
         iosTarget.binaries.framework {
             baseName = "SharedLogic"
             isStatic = true
-            export(project(":shared:payloads"))
         }
     }
 
@@ -34,11 +35,41 @@ kotlin {
     }
 
     sourceSets {
-        commonMain.dependencies {
-            api(project(":shared:payloads"))
+        commonMain {
+            kotlin.srcDir(layout.buildDirectory.dir("generated/openapi/src/main/kotlin"))
+            dependencies {
+                api(libs.kotlinx.serialization.core)
+            }
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }
     }
+}
+
+// Generates @Serializable Kotlin data classes from services/api.yaml.
+// Runs automatically before every compilation; rerun manually with ./gradlew :apps:leptos-agent:shared:sharedLogic:openApiGenerate
+tasks.openApiGenerate {
+    generatorName.set("kotlin")
+    inputSpec.set(rootProject.file("services/api.yaml").absolutePath)
+    outputDir.set(layout.buildDirectory.dir("generated/openapi").get().asFile.absolutePath)
+    modelPackage.set("com.alwinsden.leptosagent.sharedLogic")
+    apiPackage.set("com.alwinsden.leptosagent.sharedLogic")
+    globalProperties.set(
+        mapOf(
+            "models" to "",
+            "modelDocs" to "false",
+            "modelTests" to "false",
+        )
+    )
+    configOptions.set(
+        mapOf(
+            "serializationLibrary" to "kotlinx_serialization",
+            "enumPropertyNaming" to "UPPERCASE",
+        )
+    )
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask<*>>().configureEach {
+    dependsOn(tasks.openApiGenerate)
 }

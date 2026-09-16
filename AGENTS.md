@@ -19,10 +19,32 @@ Kotlin Multiplatform **monorepo** (multiple apps + shared modules) built from th
 ```
 apps/<app>/androidApp|iosApp       # each KMP app lives in its own folder
 apps/<app>/shared/<module>         # per-app shared modules, owned by that app
-shared/<module>                    # repo-level shared modules (currently :shared:payloads)
+shared/<module>                    # repo-level shared modules (none at the moment)
+services/<service>                 # Go backend services; `services/` is the Go monorepo
 ```
 
-Each app's `shared/` modules live inside the app folder and are owned by that app. A repo-level `shared/` module only exists if it is genuinely cross-app (as `:shared:payloads` is).
+Each app's `shared/` modules live inside the app folder and are owned by that app. A repo-level `shared/` module only exists if it is genuinely cross-app.
+
+### Go services monorepo
+
+`services/` holds all Go backend services; the **`go.mod` lives at the repo root** (module `github.com/alwinsden/leptos-agent`), so everything is run from the repo root (`services/leptos-agent` is the backend for the `apps/leptos-agent` UI, importable as `github.com/alwinsden/leptos-agent/services/leptos-agent`):
+
+```sh
+go run ./services/leptos-agent   # run a service (listens on :8080)
+go build ./...                   # NOTE: writes a `leptos-agent` binary at the repo root (gitignored)
+go test ./...                    # tests for all services
+```
+
+### API contract (OpenAPI-first)
+
+`services/api.yaml` is the single source of truth for request/response types; both sides are generated from it:
+
+```sh
+go tool oapi-codegen -config services/leptos-agent/oapi-codegen.yaml services/api.yaml  # regenerates Go types into services/leptos-agent/gen.go (do not edit)
+./gradlew :apps:leptos-agent:shared:sharedLogic:openApiGenerate                         # regenerates Kotlin models into sharedLogic (auto-runs before compilation too)
+```
+
+To add/modify an endpoint or payload, edit `services/api.yaml` and rerun both generators (`make generate` runs both) — never hand-edit `services/leptos-agent/gen.go` or the generated Kotlin models under `apps/leptos-agent/shared/sharedLogic/build/generated`.
 
 ### Adding a new app
 
@@ -38,7 +60,7 @@ Each app's `shared/` modules live inside the app folder and are owned by that ap
 - `apps/leptos-agent/shared/sharedLogic` — shared non-UI logic; also produces the static framework `SharedLogic` (iosArm64, iosSimulatorArm64) consumed by the iOS app.
 - `apps/leptos-agent/shared/sharedUI` — shared Compose UI; Compose resources live in `apps/leptos-agent/shared/sharedUI/src/commonMain/composeResources` (accessed via generated `Res` class).
 - `apps/leptos-agent/androidApp` — Android entry (`com.alwinsden.leptosagent.MainActivity`).
-- `shared/payloads` — kotlinx-serialization payload/data types, shared repo-level. It is an `api` dependency of `sharedLogic` **and exported in the `SharedLogic` iOS framework** (`export(project(":shared:payloads"))`), so payload classes are visible from Swift.
+- OpenAPI Kotlin models live in `sharedLogic` (package `com.alwinsden.leptosagent.sharedLogic`), **generated** from `services/api.yaml` (see the OpenAPI section above). They are compiled into the `SharedLogic` iOS framework automatically (a module's own classes need no explicit `export()`), so payload classes are visible from Swift.
 
 ## Gotchas
 

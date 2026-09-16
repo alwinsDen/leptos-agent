@@ -1,0 +1,6 @@
+# oapi-codegen config — generates Go types from services/api.yaml
+# Run from repo root: go tool oapi-codegen -config services/leptos-agent/oapi-codegen.yaml services/api.yaml
+package: main
+generate:
+  models: true
+output: services/leptos-agent/gen.go

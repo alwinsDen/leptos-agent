@@ -1,0 +1,64 @@
+openapi: 3.0.3
+info:
+  title: leptos-agent API
+  version: 0.1.0
+servers:
+  - url: http://localhost:8080
+paths:
+  /health:
+    get:
+      operationId: getHealth
+      responses:
+        "200":
+          description: Service health
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthResponse"
+  /conversation/submit:
+    post:
+      operationId: submitConversation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ConversationSubmitRequest"
+      responses:
+        "200":
+          description: Conversation submitted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ConversationSubmitResponse"
+components:
+  schemas:
+    HealthResponse:
+      type: object
+      required:
+        - status
+      properties:
+        status:
+          type: string
+    ConversationSubmitRequest:
+      type: object
+      required:
+        - model
+        - prompt
+      properties:
+        model:
+          type: string
+        prompt:
+          type: string
+        conversationId:
+          type: string
+    ConversationSubmitResponse:
+      type: object
+      required:
+        - conversationId
+        - message
+      properties:
+        conversationId:
+          type: string
+        message:
+          type: string
