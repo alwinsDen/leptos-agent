@@ -47,11 +47,11 @@ kotlin {
     }
 }
 
-// Generates @Serializable Kotlin data classes from services/api.yaml.
+// Generates @Serializable Kotlin data classes from services/leptos-agent/api.yaml.
 // Runs automatically before every compilation; rerun manually with ./gradlew :apps:leptos-agent:shared:sharedLogic:openApiGenerate
 tasks.openApiGenerate {
     generatorName.set("kotlin")
-    inputSpec.set(rootProject.file("services/api.yaml").absolutePath)
+    inputSpec.set(rootProject.file("services/leptos-agent/api.yaml").absolutePath)
     outputDir.set(layout.buildDirectory.dir("generated/openapi").get().asFile.absolutePath)
     modelPackage.set("com.alwinsden.leptosagent.sharedLogic")
     apiPackage.set("com.alwinsden.leptosagent.sharedLogic")

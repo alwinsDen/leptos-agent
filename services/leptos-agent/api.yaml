@@ -10,7 +10,7 @@ paths:
       operationId: getHealth
       responses:
         "200":
-          description: Service health
+          description: Service health API
           content:
             application/json:
               schema:

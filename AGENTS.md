@@ -27,7 +27,7 @@ Each app's `shared/` modules live inside the app folder and are owned by that ap
 
 ### Go services monorepo
 
-`services/` holds all Go backend services; the **`go.mod` lives at the repo root** (module `github.com/alwinsden/leptos-agent`), so everything is run from the repo root (`services/leptos-agent` is the backend for the `apps/leptos-agent` UI, importable as `github.com/alwinsden/leptos-agent/services/leptos-agent`):
+`services/` holds all Go backend services; the **`go.mod` lives at the repo root** (module `github.com/alwinsden/kmp-monorepo`), so everything is run from the repo root (`services/leptos-agent` is the backend for the `apps/leptos-agent` UI, importable as `github.com/alwinsden/kmp-monorepo/services/leptos-agent`):
 
 ```sh
 go run ./services/leptos-agent   # run a service (listens on :8080)

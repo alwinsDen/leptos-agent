@@ -1,4 +1,4 @@
-# Leptos Agent Monorepo
+# KMP-GO Monorepo
 
 This is a Kotlin Multiplatform monorepo containing multiple apps, shared modules, and Go backend
 services (`services/`).
@@ -44,6 +44,16 @@ app target. The Xcode build phase runs
 go run ./services/leptos-agent   # run the backend (listens on :8080)
 go build ./...                   # build all services
 go test ./...                    # test all services
+```
+
+#### Hot reload with air
+
+[.air.toml](./.air.toml) is configured for the whole `services/` monorepo: pick the service to run/watch with the
+`AIR_SERVICE` env var (there is no default — it must be set). It builds `./services/$AIR_SERVICE` and rebuilds on any
+change under `services/`:
+
+```sh
+AIR_SERVICE=leptos-agent go tool air   # run the backend with hot reload (listens on :8080)
 ```
 
 ## API contract (OpenAPI-first)
